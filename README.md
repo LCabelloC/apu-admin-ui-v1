@@ -1,2 +1,4 @@
-# apu-admin-ui-v1
-Aplicación de escritorio creada con python creada para permitir simplificar las gestiones de una organización que lucha contra el cáncer infantil llamada APU (Asociación Pablo Ugarte)
+# APU-ADMIN-UI
+
+Esta es una aplicación creada para ayudar a la APU. Con esta desktop-app queremos ayudar a simplificar el manejo de una base de datos de sus socios.
+
