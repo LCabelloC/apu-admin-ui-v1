@@ -1,0 +1,2 @@
+# Todas las dependencias virtuales las omitimos de subir al git hub
+venv/ 
