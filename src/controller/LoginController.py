@@ -1,46 +1,54 @@
+# Lecturas de CSV
 import csv
+# Codificacion de la contraseña
+import hashlib
+
+# Clase para el control del Login Inicial
+# Gonzalo Casquete Rodriguez
+# V0.0
 
 
-def hash_password(password):
-    # Selecciona un algoritmo de hash seguro, como SHA-256
-    hash_algorithm = hashlib.sha256()
+class LoginController:
+    # privates
 
-    # Convierte la contraseña a bytes y actualiza el objeto hash
-    hash_algorithm.update(password.encode('utf-8'))
+    # publics
 
-    # Obtiene el hash resultante en formato hexadecimal
-    hashed_password = hash_algorithm.hexdigest()
+    # Constructor que asigna la ruta pasada por parametro como fichero de lectura, obtiene la password y la almacena codificada
+    # La ruta deberia ser ../data/password.csv
+    # Param CsvFile
+    def __init__(self, CsvFile):
+        with open(CsvFile, newline='', encoding='utf-8') as file:
+            # Crear un objeto lector CSV
+            lector_csv = csv.reader(file)
 
-    return hashed_password
+            # Ignorar la primera fila si contiene encabezados
+            next(lector_csv, None)
+
+            # Obtener la primera fila (suponiendo que solo hay una contraseña)
+            first_row = next(lector_csv, None)
+
+            # Extraer la contraseña de la primera fila
+            password = first_row[0] if first_row else None
+
+            self._EncryptedPassword = password
+            print(password)
+
+    # Metodo que verifica la password introducida y la almacenada en el CSV
+    # Param password
+    def authenticate_user(self, password):
+        hash_algorithm = hashlib.sha256()
+        hash_algorithm.update(password.encode('utf-8'))
+        hashed_password = hash_algorithm.hexdigest()
+
+        print(hashed_password)
+
+        if hashed_password == self._EncryptedPassword:
+            return True
+        else:
+            return False
 
 
-# Ruta al archivo CSV
-archivo_csv = '../data/password.csv'
-
-# Lista para almacenar las contraseñas
-contraseñas = []
-
-# Abrir el archivo CSV en modo lectura
-with open(archivo_csv, newline='', encoding='utf-8') as archivo:
-    # Crear un objeto lector CSV
-    lector_csv = csv.reader(archivo)
-
-    # Ignorar la primera fila si contiene encabezados
-    next(lector_csv, None)
-
-    # Iterar sobre las filas del archivo CSV
-    for fila in lector_csv:
-        # Agregar la contraseña a la lista
-        contraseñas.append(fila[0])
-
-# Comprobar que la contraseña introducida coincide
-    import hashlib
-
-    password = input("Ingresa tu contraseña: ")
-    hashed_password = hash_password(password)
-    print("Contraseña cifrada:", hashed_password)
-
-    if hashed_password == contraseñas[0]:
-        print("Contraseña correcta")
-    else:
-        print("Error al introducir la contraseña")
+# Testing
+# controller = LoginController("../data/password.csv")
+# contraseña_input = input("Ingrese su contraseña: ")
+# controller.authenticate_user(contraseña_input)
