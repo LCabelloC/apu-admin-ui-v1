@@ -9,13 +9,10 @@ import hashlib
 
 
 class LoginController:
-    # privates
-
-    # publics
-
     # Constructor que asigna la ruta pasada por parametro como fichero de lectura, obtiene la password y la almacena codificada
     # La ruta deberia ser ../data/password.csv
     # Param CsvFile
+    @classmethod
     def __init__(self, CsvFile):
         with open(CsvFile, newline='', encoding='utf-8') as file:
             # Crear un objeto lector CSV
